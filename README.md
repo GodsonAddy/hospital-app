@@ -10,15 +10,9 @@ npm install
 npm run serve
 ```
 
-### Compiles and minifies for production
+### For server
 ```
-npm run build
-```
+npm run dev
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Login access
+Need to go to /Routes/Users.js to get info for login 
