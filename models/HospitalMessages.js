@@ -10,7 +10,7 @@ const HospitalSchema = new Schema(
       required: true
     },
     file: {
-      type: String,
+      
       data: Buffer
     },
     sender: {

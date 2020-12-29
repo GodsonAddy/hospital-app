@@ -2,7 +2,7 @@
   <div>
 
     <md-toolbar class="md-primary" md-elevation="1">
-      <h3 class="md-title md-toolbar-section-start" style="flex: 1">Welcome, {{name}}</h3>
+      <h3 class="md-title md-toolbar-section-start" style="flex: 1">Welcome</h3>
       <md-button>Refresh</md-button>
       <md-button class="md-primary" @click="LogOut()">Logout</md-button>
     </md-toolbar>

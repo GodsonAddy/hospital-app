@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import 
-  { MdButton, MdApp, MdField, MdElevation, MdIcon, MdContent, MdDivider, MdProgress, MdToolbar, MdList, MdTabs, MdBadge }
+  { MdButton, MdApp, MdField, MdElevation, MdIcon, MdContent, MdDivider, MdProgress, MdToolbar, MdList, MdTabs, MdCard }
  from 
 'vue-material/dist/components'
 import 'vue-material/dist/vue-material.min.css'
@@ -11,7 +11,7 @@ import axios from 'axios'
 
 
 Vue.prototype.$axios = axios
-Vue.use(MdBadge)
+Vue.use(MdCard)
 Vue.use(MdTabs)
 Vue.use(MdButton)
 Vue.use(MdApp)

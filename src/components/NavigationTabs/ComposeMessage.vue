@@ -1,6 +1,6 @@
 <template>
   <div class="control">
-      <form @click.prevent="SendMessage">
+      <form >
      <md-content class="md-elevation-2"> 
          <md-field>
       <label>To</label>
@@ -22,7 +22,7 @@
       <md-textarea v-model="content"></md-textarea>
     </md-field>
 
-     <md-button  class="md-raised md-primary" v-if="!loading" >
+     <md-button  class="md-raised md-primary" v-if="!loading" @click.prevent="SendMessage" >
        Send
       </md-button>
      <md-button  class="md-raised md-primary" v-if="loading" disabled >

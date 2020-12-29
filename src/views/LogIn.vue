@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div >
     <center>
       <form >
       <md-content class="md-elevation-4">
@@ -54,9 +54,10 @@ export default {
   },
   data(){
     return{
-        name: "",
-        password: "",
-        loading: false
+      name: "",
+      password: "",
+      loading: false,
+      
     }
   },
   methods:  {
@@ -67,15 +68,21 @@ export default {
         password: this.password
 
       })
-      .then((res) => {
+      .then((res) =>{
         this.loading = false
         this.$router.push({path: "/user"})
         console.log(res)
+        
       })
       .catch((err) => {
         this.loading = false
+        this.showError()
         console.log(err)
       })
+    },
+    showError() {
+      alert("The name or password typed is wrong")
+      
     }
   }, 
   mounted: function () {
