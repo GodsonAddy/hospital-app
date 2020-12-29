@@ -4,8 +4,8 @@
     <div v-for="item in inbox" v-bind:key="item._id" >
       <md-card>
         <md-card-header>
-          <div class="md-title">From: {{item.sender}}</div>
-          <div class="md-subhead">To:  </div>
+          <div class="md-title">From: {{item.username}}</div>
+          <div class="md-subhead">To: {{item.recepient}}  </div>
         </md-card-header>
 
         <md-card-expand>
@@ -100,6 +100,7 @@
   
   .card-expansion {
     height: 480px;
+    overflow: auto;
   }
 
   .md-card {

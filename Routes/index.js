@@ -23,9 +23,9 @@ router.post('/', function (req, res) {
   const payload = {
     file: req.body.file,
     recepient: req.body.recepient,
-    sender: req.body.sender,
+    username: req.body.username,
     content: req.body.content,
-    _id: new mongoose.Types.ObjectId()
+    _id: new mongoose.Schema.Types.ObjectId()
   }
   const item = new HospMessages(payload)
   item.save()
@@ -37,7 +37,7 @@ router.patch('/:id', function (req, res) {
   const payload = {
     file: req.body.file,
     recepient: req.body.recepient,
-    sender: req.body.sender,
+    username: req.body.username,
     content: req.body.content
   }
   HospMessages.findByIdAndUpdate(id, payload)

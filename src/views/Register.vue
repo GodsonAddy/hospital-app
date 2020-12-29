@@ -56,48 +56,48 @@
 </template>
 
 <script>
-import LoadingComponent from '@/components/LoadingComponent.vue'
+  import LoadingComponent from '@/components/LoadingComponent.vue'
 
-export default {
-  name: 'Register',
-  components: {
-    LoadingComponent
-  },
-   data(){
-    return{
-      username: "",
-      password: "",
-      email: "",
-      loading: false,
+  export default {
+    name: 'Register',
+    components: {
+      LoadingComponent
+    },
+    data(){
+      return{
+        username: "",
+        password: "",
+        email: "",
+        loading: false,
+        
+      }
+    },
+    methods:  {
+      Register() {
+        this.loading = true
+        this.$axios.post("http://localhost:3000/api/register",{
+          username: this.username,
+          password: this.password,
+          email: this.email
+
+        })
+        .then((res) =>{
+          this.loading = false
+          this.$router.push({name: 'user'})
+          console.log(res)
+          
+        })
+        .catch((err) => {
+          this.loading = false
+          console.log(err)
+        })
+      },
+      
+    }, 
+    mounted: function () {
       
     }
-  },
-  methods:  {
-    Register() {
-      this.loading = true
-      this.$axios.post("http://localhost:3000/api/register",{
-        username: this.username,
-        password: this.password,
-        email: this.email
-
-      })
-      .then((res) =>{
-        this.loading = false
-        this.$router.push({name: 'user'})
-        console.log(res)
-        
-      })
-      .catch((err) => {
-        this.loading = false
-        console.log(err)
-      })
-    },
-    
-  }, 
-  mounted: function () {
-    
   }
-}
 
 
 

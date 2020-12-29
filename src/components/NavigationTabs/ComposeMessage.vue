@@ -4,12 +4,12 @@
      <md-content class="md-elevation-2"> 
          <md-field>
       <label>To</label>
-      <md-input v-model="recepient" disabled></md-input>
+      <md-input v-model="recepient" ></md-input>
     </md-field>
 
     <md-field>
-      <label>Card Number</label>
-      <md-input v-model="sender" placeholder="Your Hospital Card Number"></md-input>
+      <label>Username</label>
+      <md-input v-model="username" placeholder="Username"></md-input>
     </md-field>
 
     <md-field>
@@ -47,8 +47,8 @@
       return {
         file: "",
         content: "",
-        sender: "",
-        recepient: "admin",
+        username: "",
+        recepient: "",
         loading: false
       }
     }, 
@@ -58,7 +58,7 @@
         this.$axios.post("http://localhost:3000/api/messages", {
           file: this.file,
           content: this.content,
-          sender: this.sender,
+          username: this.username,
           recepient: this.recepient
         })
         .then((res) => {

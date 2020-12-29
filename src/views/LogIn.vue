@@ -45,47 +45,47 @@
 </template>
 
 <script>
-import LoadingComponent from '@/components/LoadingComponent.vue'
+  import LoadingComponent from '@/components/LoadingComponent.vue'
 
-export default {
-  name: 'LogIn',
-  components: {
-    LoadingComponent
-  },
-  data(){
-    return{
-      username: "",
-      password: "",
-      loading: false,
+  export default {
+    name: 'LogIn',
+    components: {
+      LoadingComponent
+    },
+    data(){
+      return{
+        username: "",
+        password: "",
+        loading: false,
+        
+      }
+    },
+    methods:  {
+      SignIn() {
+        this.loading = true
+        this.$axios.post("http://localhost:3000/api/login",{
+          username: this.username,
+          password: this.password
+
+        })
+        .then((res) =>{
+          this.loading = false
+          this.$router.push({name: "user"})
+          console.log(res)
+          
+        })
+        .catch((err) => {
+          this.loading = false
+          alert("The name or password typed is wrong")
+          console.log(err)
+        })
+      },
+      
+    }, 
+    mounted: function () {
       
     }
-  },
-  methods:  {
-    SignIn() {
-      this.loading = true
-      this.$axios.post("http://localhost:3000/api/login",{
-        username: this.username,
-        password: this.password
-
-      })
-      .then((res) =>{
-        this.loading = false
-        this.$router.push({name: "user"})
-        console.log(res)
-        
-      })
-      .catch((err) => {
-        this.loading = false
-        alert("The name or password typed is wrong")
-        console.log(err)
-      })
-    },
-    
-  }, 
-  mounted: function () {
-    
   }
-}
 
 </script>
 

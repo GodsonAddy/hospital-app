@@ -24,18 +24,18 @@
 </template>
 
 <script>
-import ComposeMessage from '@/components/NavigationTabs/ComposeMessage.vue'
-import Inbox from '@/components/NavigationTabs/Inbox.vue'
-import SentMessages from '@/components/NavigationTabs/SentMessages.vue'
+  import ComposeMessage from '@/components/NavigationTabs/ComposeMessage.vue'
+  import Inbox from '@/components/NavigationTabs/Inbox.vue'
+  import SentMessages from '@/components/NavigationTabs/SentMessages.vue'
 
-export default {
-  name: 'Navigator',
-  components: {
-    ComposeMessage,
-    Inbox,
-    SentMessages
+  export default {
+    name: 'Navigator',
+    components: {
+      ComposeMessage,
+      Inbox,
+      SentMessages
+    }
   }
-}
 </script>
 
 <style lang="scss" scoped>

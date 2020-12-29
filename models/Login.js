@@ -4,6 +4,7 @@ const { Schema } = mongoose;
 
 const LoginSchema = new Schema(
   {
+    
     email: {
       type: String,
       required: true
@@ -13,9 +14,10 @@ const LoginSchema = new Schema(
       required: true
     },
     username: {
-        type: String,
-        required: true
+      type: String,
+      required: true
     },
+    hospmessages: [Schema.Types.ObjectId]
     
   },{timestamps: true}
 );
