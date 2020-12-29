@@ -1,13 +1,24 @@
 <template>
-  <div >
+  <div>
     <center>
       <form >
       <md-content class="md-elevation-4">
-        <h1> User </h1>
+        <h1> Register</h1>
         <md-divider></md-divider>
         <br />
         <div >
-          <label for="name">username </label>
+          <label for="email">Email </label>
+          <input 
+            type="text" 
+            name="email" 
+            required id="email" 
+            class="form-control" 
+            placeholder="Enter your emal"
+            v-model="email"
+          >
+        </div>
+        <div >
+          <label for="name">username</label>
           <input 
             type="text" 
             name="name" 
@@ -29,7 +40,7 @@
           >
         </div>
           
-        <md-button  class="md-raised md-primary"  v-if="!loading" @click.prevent="SignIn">
+        <md-button  class="md-raised md-primary"  v-if="!loading" @click.prevent="Register">
           LOGIN
         </md-button>
         <md-button  class="md-raised md-primary" disabled v-if="loading">
@@ -48,35 +59,36 @@
 import LoadingComponent from '@/components/LoadingComponent.vue'
 
 export default {
-  name: 'LogIn',
+  name: 'Register',
   components: {
     LoadingComponent
   },
-  data(){
+   data(){
     return{
       username: "",
       password: "",
+      email: "",
       loading: false,
       
     }
   },
   methods:  {
-    SignIn() {
+    Register() {
       this.loading = true
-      this.$axios.post("http://localhost:3000/api/login",{
+      this.$axios.post("http://localhost:3000/api/register",{
         username: this.username,
-        password: this.password
+        password: this.password,
+        email: this.email
 
       })
       .then((res) =>{
         this.loading = false
-        this.$router.push({name: "user"})
+        this.$router.push({name: 'user'})
         console.log(res)
         
       })
       .catch((err) => {
         this.loading = false
-        alert("The name or password typed is wrong")
         console.log(err)
       })
     },
@@ -87,12 +99,15 @@ export default {
   }
 }
 
+
+
 </script>
 
-<style lang="scss" scoped>
-  .md-content {
-    width: 400px;
-    height: 400px;
+<style lang='scss' scoped>
+
+ .md-content {
+    width: 500px;
+    height: 500px;
     padding: 10px;
     margin: 10px;
   }
@@ -119,5 +134,5 @@ export default {
   box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
-</style>
 
+</style>

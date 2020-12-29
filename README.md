@@ -14,5 +14,9 @@ npm run serve
 ```
 npm run dev
 
-### Login access
-Need to go to /Routes/Users.js to get info for login 
+### frameworks
+Nodejs
+Mongodb
+Express
+Vue
+

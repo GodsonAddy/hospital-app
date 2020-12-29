@@ -5,7 +5,7 @@
       <md-card>
         <md-card-header>
           <div class="md-title">From: {{item.sender}}</div>
-          <div class="md-subhead">To: </div>
+          <div class="md-subhead">To:  </div>
         </md-card-header>
 
         <md-card-expand>
@@ -13,9 +13,11 @@
             <div>
               <md-button @click="replyMessage()">
                 <md-icon class="md-primary" >reply</md-icon>
+                <md-tooltip md-direction="bottom">reply</md-tooltip>
               </md-button>
               <md-button @click="deleteMessage(item._id)">
                 <md-icon class="md-accent" >delete</md-icon>
+                <md-tooltip md-direction="bottom">delete</md-tooltip>
               </md-button>
             </div>
 
@@ -56,7 +58,7 @@
     },
     methods: {
       getMessage() {
-        this.$axios.get(`http://localhost:3000/api/messages`)
+      this.$axios.get(`http://localhost:3000/api/messages` )
         .then(res => {
           console.log(res)
           this.inbox = res.data.messages
@@ -78,7 +80,15 @@
         })
 
       },
-      replyMessage(){
+      replyMessage(_id){
+        this.$axios.post(`http://localhost:3000/api/messages/${_id}`, { _id })
+        .then(res => {
+          console.log(res)
+          this.inbox = ""
+        })
+        .catch(error => {
+          console.log(error)
+        })
 
       }
             

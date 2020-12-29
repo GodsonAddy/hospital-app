@@ -32,10 +32,11 @@ mongoose.set('debug', true);
 
 // Models
 require('./models/HospitalMessages');
+require('./models/Login')
 
 // routes
 
-app.use('/api/users', require('./Routes/LoginExpress'));
+app.use('/api', require('./Routes/LoginExpress'));
 app.use('/api/messages', require('./Routes/index'));
 
 app.use(express.static(path.join(__dirname, "public")));

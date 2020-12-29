@@ -1,8 +1,11 @@
 const express = require("express");
 const Signin = express.Router();
-const Users =require("./Users.js")
+const Auth = require('../contollers/Auth')
 
+Signin.post('/register', Auth.register)
+Signin.post('/login', Auth.login)
 
+{/*
 Signin.get('/', (req, res) => {
     res.json(Users)
 })
@@ -31,4 +34,5 @@ Signin.post('/', async (req, res) => {
     }
 
 })
+*/}
 module.exports = Signin;
