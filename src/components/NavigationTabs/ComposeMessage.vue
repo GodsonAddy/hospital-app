@@ -3,18 +3,13 @@
       <form >
      <md-content class="md-elevation-2"> 
          <md-field>
-      <label>To</label>
-      <md-input v-model="recepient" ></md-input>
+      <label>Title</label>
+      <md-input v-model="title" ></md-input>
     </md-field>
 
     <md-field>
-      <label>Username</label>
-      <md-input v-model="username" placeholder="Username"></md-input>
-    </md-field>
-
-    <md-field>
-      <label>File</label>
-      <md-file v-model="file" />
+      <label>From</label>
+      <md-input v-model="author" placeholder="Author"></md-input>
     </md-field>
 
     <md-field>
@@ -36,6 +31,8 @@
 
 <script>
   import LoadingComponent from '@/components/LoadingComponent.vue'
+  import firebase from 'firebase'
+  import 'firebase/database'
 
   export default {
     name: 'ComposeMessage',
@@ -45,37 +42,39 @@
     },
     data() {
       return {
-        file: "",
         content: "",
-        username: "",
-        recepient: "",
+        title: "",
+        author: "",
         loading: false
       }
     }, 
     methods: {
+     
       SendMessage() {
+        let userId = firebase.auth().currentUser.email
         this.loading = true
-        this.$axios.post("http://localhost:3000/api/messages", {
-          file: this.file,
+        return firebase.firestore().collection('users' + userId ).add({
+          author: this.author,
+          title: this.title,
           content: this.content,
-          username: this.username,
-          recepient: this.recepient
+          date: firebase.firestore.Timestamp.fromDate(new Date())
+          
         })
-        .then((res) => {
+        .then(res => {
           this.loading = false
+          alert(`Message successfully sent, ${firebase.auth().currentUser.email}`)
+          this.title = ''
+          this.author = ''
+          this.content = ''
           console.log(res)
-          this.AlertMessage()
+
         })
-        .catch((err) => {
+        .catch(error => {
+          console.log(error)
           this.loading = false
-          console.log(err)
         })
-        
       },
-      AlertMessage() {
-        alert("Your message has been sent")
-      
-      }
+     
     }
   }
 </script>

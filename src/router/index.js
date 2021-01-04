@@ -1,14 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import MainPage from '../views/MainPage.vue'
+import Dashboard from '../views/Dashboard.vue'
 import LogIn from '../views/LogIn.vue'
 import Home from '../views/Home.vue'
-import Register from '../views/Register.vue'
 import ComposeMessage from '@/components/NavigationTabs/ComposeMessage'
 import Inbox from '@/components/NavigationTabs/Inbox'
-
-
-
+import SentMessages from '@/components/NavigationTabs/SentMessages'
+import firebase from 'firebase'
 
 Vue.use(VueRouter)
 
@@ -16,23 +14,26 @@ const routes = [
   {
     path : '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    meta: {
+      requiresGuest: true
+    }
   },
   {
     path : '/login',
     name: 'LogIn',
-    component: LogIn
+    component: LogIn,
+    meta: {
+      requiresGuest: true
+    }
   },
   {
-    path : '/register',
-    name: 'Register',
-    component: Register
-  },
- 
-  {
-    path: '/user',
+    path: `/user`,
     name: 'user',
-    component: MainPage
+    component: Dashboard,
+    meta: {
+      requiresAuth: true
+    }
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -47,6 +48,11 @@ const routes = [
     path: '/inbox',
     name: 'Inbox',
     component: Inbox
+  },
+  {
+    path: '/sentMessages',
+    name: 'SentMessages',
+    component: SentMessages
   }
 ]
 
@@ -56,4 +62,35 @@ const router = new VueRouter({
   routes
 })
 
+router.beforeEach((to, from, next) => {
+  if(to.matched.some(record => record.meta.requiresAuth)) {
+    if(!firebase.auth().currentUser) {
+      next({
+        path: '/',
+        query: {
+          redirect: to.fullPath
+        }
+      })
+    }
+    else{
+      next()
+    }
+  }
+  else if(to.matched.some(record => record.meta.requiresGuest)) {
+    if(firebase.auth().currentUser) {
+      next({
+        path:  '/user',
+        query: {
+          redirect: to.fullPath
+        }
+      })
+    }
+    else{
+      next()
+    }
+  }
+  else {
+    next()
+  }
+})
 export default router

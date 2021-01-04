@@ -1,11 +1,14 @@
 <template>
   <div class="card-expansion">
     
-    <div v-for="item in inbox" v-bind:key="item._id" >
+    <div v-for="item in inbox" v-bind:key="item.key" >
       <md-card>
         <md-card-header>
-          <div class="md-title">From: {{item.username}}</div>
-          <div class="md-subhead">To: {{item.recepient}}  </div>
+          <div class="md-title">
+            Title: {{item.title}}
+          </div>
+          <div class="md-subhead">From: {{item.author}}  </div>
+          <div> Date:  {{item.date.toDate() | date}} </div>
         </md-card-header>
 
         <md-card-expand>
@@ -15,7 +18,7 @@
                 <md-icon class="md-primary" >reply</md-icon>
                 <md-tooltip md-direction="bottom">reply</md-tooltip>
               </md-button>
-              <md-button @click="deleteMessage(item._id)">
+              <md-button @click="deleteMessage(item.key)">
                 <md-icon class="md-accent" >delete</md-icon>
                 <md-tooltip md-direction="bottom">delete</md-tooltip>
               </md-button>
@@ -31,7 +34,7 @@
           <md-card-expand-content>
 
             <md-card-content>
-              {{item.content}} {{item.file}}
+              <strong> {{item.content}}</strong>
             </md-card-content>
           </md-card-expand-content>
         </md-card-expand>
@@ -44,52 +47,52 @@
 
 
 <script>
+  import firebase from 'firebase'
+  import 'firebase/firestore'
 
   export default {
     name: "Inbox",
     data(){
       return{
-        inbox: undefined,
+        inbox: [],
       
       }
     },
-    mounted: function () {
-     this.getMessage()
+    created() {
+      let userId = firebase.auth().currentUser.email
+      firebase.firestore().collection('users' + userId).get()
+      .then( querySnapshot => {
+        querySnapshot.forEach(doc => {
+          const data = {
+            "key": doc.id,
+            "title": doc.data().title,
+            "author": doc.data().author,
+            "content": doc.data().content,
+            date: new firebase.firestore.Timestamp.fromDate(new Date())
+          }
+          this.inbox.push(data)
+
+        })
+          
+          
+      })
+      
     },
     methods: {
-      getMessage() {
-      this.$axios.get(`http://localhost:3000/api/messages` )
-        .then(res => {
-          console.log(res)
-          this.inbox = res.data.messages
-        })
-        .catch(err => { 
-          console.log(err)
-        })
-
+      deleteMessage(){
+        let userId = firebase.auth().currentUser.email
+        if (window.confirm("Do you really want to delete?")) {
+          firebase.firestore().collection("users").doc(userId).delete()
+          .then(() => {
+            console.log("Document deleted!");
+          })
+          .catch((error) => {
+            console.error(error);
+          })
+        }
       },
-      deleteMessage(id){
-        this.$axios.delete(`http://localhost:3000/api/messages/${id}`, { id })
-        .then(res => {
-          this.getMessage()
-          console.log(res)
-          alert('Message deleted successfully')
-        })
-        .catch( error => {
-          console.log(error)
-        })
-
-      },
-      replyMessage(_id){
-        this.$axios.post(`http://localhost:3000/api/messages/${_id}`, { _id })
-        .then(res => {
-          console.log(res)
-          this.inbox = ""
-        })
-        .catch(error => {
-          console.log(error)
-        })
-
+      replyMessage(){
+      
       }
             
     }

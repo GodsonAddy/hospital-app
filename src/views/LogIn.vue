@@ -1,20 +1,22 @@
 <template>
   <div >
+    <br />
     <center>
       <form >
       <md-content class="md-elevation-4">
-        <h1> User </h1>
+        <h1> Login </h1>
         <md-divider></md-divider>
         <br />
         <div >
-          <label for="name">username </label>
+          <label for="email">Email </label>
           <input 
-            type="text" 
-            name="name" 
-            required id="name" 
+            type="email" 
+            name="email" 
+            required 
+            id="email" 
             class="form-control" 
-            placeholder="Enter your username"
-            v-model="username"
+            placeholder="Enter your email"
+            v-model="email"
           >
         </div>
         <div >
@@ -23,7 +25,8 @@
             type="password" 
             name="password" 
             class="form-control" 
-            required id="password" 
+            required 
+            id="password" 
             placeholder="Enter your password"
             v-model="password"
           >
@@ -35,7 +38,8 @@
         <md-button  class="md-raised md-primary" disabled v-if="loading">
           <loading-component></loading-component>
         </md-button>
-            
+
+        <p> Don't have an account? <router-link to='/'> Register here </router-link> </p> 
             
       </md-content>
       </form>
@@ -46,6 +50,7 @@
 
 <script>
   import LoadingComponent from '@/components/LoadingComponent.vue'
+  import firebase from 'firebase'
 
   export default {
     name: 'LogIn',
@@ -54,35 +59,40 @@
     },
     data(){
       return{
-        username: "",
+        email: "",
         password: "",
         loading: false,
-        
+        currentUser: false
       }
     },
     methods:  {
-      SignIn() {
+      SignIn(e) {
+        e.preventDefault()
         this.loading = true
-        this.$axios.post("http://localhost:3000/api/login",{
-          username: this.username,
-          password: this.password
-
-        })
-        .then((res) =>{
+        
+        firebase.auth().signInWithEmailAndPassword(this.email, this.password)
+        .then(user => {
+          console.log(user.data);
           this.loading = false
-          this.$router.push({name: "user"})
-          console.log(res)
-          
+          alert(`Welcome back, ${firebase.auth().currentUser.email}`)
+          this.$router.go({path: this.$router.path})
         })
-        .catch((err) => {
+        .catch(error => {
+          alert(error.message);
           this.loading = false
-          alert("The name or password typed is wrong")
-          console.log(err)
         })
       },
       
     }, 
-    mounted: function () {
+    created() {
+      firebase.auth().onAuthStateChanged(userAuth => {
+        if (userAuth) {
+          firebase.auth().currentUser.getIdTokenResult()
+          .then(tokenResult => {
+            console.log(tokenResult.claims);
+          });
+        }
+      });
       
     }
   }

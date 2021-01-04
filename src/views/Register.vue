@@ -46,7 +46,8 @@
         <md-button  class="md-raised md-primary" disabled v-if="loading">
           <loading-component></loading-component>
         </md-button>
-            
+
+        <p> Already have an account? <router-link to='/login'> Login here </router-link> </p>
             
       </md-content>
       </form>
@@ -57,6 +58,7 @@
 
 <script>
   import LoadingComponent from '@/components/LoadingComponent.vue'
+  import firebase from 'firebase'
 
   export default {
     name: 'Register',
@@ -68,28 +70,25 @@
         username: "",
         password: "",
         email: "",
-        loading: false,
+        loading: false
         
       }
     },
     methods:  {
-      Register() {
+      Register(e) {
+        e.preventDefault()
         this.loading = true
-        this.$axios.post("http://localhost:3000/api/register",{
-          username: this.username,
-          password: this.password,
-          email: this.email
-
-        })
-        .then((res) =>{
+        firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
+        .then((user) =>{
           this.loading = false
-          this.$router.push({name: 'user'})
-          console.log(res)
+          alert(`Congrats! You have successfully registered as ${firebase.auth().currentUser.email}`)
+          console.log(user.data)
+          this.$router.go({path: this.$router.path})
           
         })
         .catch((err) => {
           this.loading = false
-          console.log(err)
+          alert(err)
         })
       },
       
