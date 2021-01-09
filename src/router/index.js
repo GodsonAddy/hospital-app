@@ -7,6 +7,11 @@ import ComposeMessage from '@/components/NavigationTabs/ComposeMessage'
 import Inbox from '@/components/NavigationTabs/Inbox'
 import SentMessages from '@/components/NavigationTabs/SentMessages'
 import firebase from 'firebase'
+import Admin from '../views/Admin.vue'
+import Comments from '@/components/NavigationTabs/Comments'
+import AdminInbox from '@/components/Admin/AdminInbox'
+import AdminSentMail from '@/components/Admin/AdminSentMail'
+import AdminComment from '@/components/Admin/AdminComment'
 
 Vue.use(VueRouter)
 
@@ -28,7 +33,15 @@ const routes = [
     }
   },
   {
-    path: `/user`,
+    path: '/admin',
+    name: 'admin',
+    component: Admin,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/user',
     name: 'user',
     component: Dashboard,
     meta: {
@@ -40,19 +53,60 @@ const routes = [
     
   },
   {
-    path: '/compose',
+    path: '/user/compose',
     name: 'ComposeMessage',
-    component: ComposeMessage
+    component: ComposeMessage,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/user/comments',
+    name: 'Comments',
+    component: Comments,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/user/inbox',
+    name: 'Inbox',
+    component: Inbox,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/user/sentMessages',
+    name: 'SentMessages',
+    component: SentMessages,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/inbox',
-    name: 'Inbox',
-    component: Inbox
+    name: 'AdminInbox',
+    component: AdminInbox,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
-    path: '/sentMessages',
-    name: 'SentMessages',
-    component: SentMessages
+    path: '/mail',
+    name: 'AdminSentMail',
+    component: AdminSentMail,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/comments',
+    name: 'AdminComment',
+    component: AdminComment,
+    meta: {
+      requiresAuth: true
+    }
   }
 ]
 
@@ -61,6 +115,9 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
+
+
 
 router.beforeEach((to, from, next) => {
   if(to.matched.some(record => record.meta.requiresAuth)) {
@@ -79,10 +136,21 @@ router.beforeEach((to, from, next) => {
   else if(to.matched.some(record => record.meta.requiresGuest)) {
     if(firebase.auth().currentUser) {
       next({
-        path:  '/user',
+        path:  '/user/compose',
         query: {
           redirect: to.fullPath
         }
+      })
+    }
+    else{
+      next()
+    }
+  }
+  else if(to.matched.some(record => record.meta.requiresGuest)) {
+    if(firebase.auth().currentUser.email === 'admin@admin.com') {
+      next({
+        path:  '/admin',
+       
       })
     }
     else{
@@ -93,4 +161,5 @@ router.beforeEach((to, from, next) => {
     next()
   }
 })
+
 export default router

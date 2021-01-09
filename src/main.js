@@ -1,7 +1,10 @@
 import Vue from 'vue'
 import App from './App.vue'
 import 
-  { MdButton, MdApp, MdField, MdElevation, MdIcon, MdContent, MdDivider, MdProgress, MdToolbar, MdList, MdTabs, MdCard, MdTooltip }
+  { MdButton, MdApp, MdField, MdElevation, MdIcon, MdContent,
+    MdDivider, MdProgress, MdToolbar, MdList, MdTabs, MdCard,
+    MdTooltip, MdDialog,MdDrawer
+  }
  from 
 'vue-material/dist/components'
 import 'vue-material/dist/vue-material.min.css'
@@ -10,9 +13,11 @@ import router from './router'
 import firebase from 'firebase'
 import 'firebase/database'
 import DateSettings from './filter/date'
+import VueSimpleAlert from "vue-simple-alert";
 
 Vue.config.productionTip = false
 
+Vue.use(VueSimpleAlert, { reverseButtons: true });
 Vue.filter('date', DateSettings)
 Vue.use(MdTooltip)
 Vue.use(MdCard)
@@ -27,6 +32,8 @@ Vue.use(MdDivider)
 Vue.use(MdProgress)
 Vue.use(MdToolbar)
 Vue.use(MdList)
+Vue.use(MdDialog)
+Vue.use(MdDrawer)
 
 
 

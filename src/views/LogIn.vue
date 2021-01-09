@@ -72,28 +72,29 @@
         
         firebase.auth().signInWithEmailAndPassword(this.email, this.password)
         .then(user => {
-          console.log(user.data);
-          this.loading = false
-          alert(`Welcome back, ${firebase.auth().currentUser.email}`)
-          this.$router.go({path: this.$router.path})
+          if(firebase.auth().currentUser.email === 'admin@admin.com') {
+            console.log(user.data);
+            this.loading = false
+            this.$alert(`Welcome back, ${firebase.auth().currentUser.email}`)
+            this.$router.push({path: '/admin'})
+          }
+          else{
+            console.log(user.data);
+            this.loading = false
+            this.$alert(`Welcome back, ${firebase.auth().currentUser.email}`)
+            this.$router.go({path: this.$router.path})
+
+          }
+         
         })
         .catch(error => {
-          alert(error.message);
+          this.$alert(error.message);
           this.loading = false
         })
       },
       
     }, 
-    created() {
-      firebase.auth().onAuthStateChanged(userAuth => {
-        if (userAuth) {
-          firebase.auth().currentUser.getIdTokenResult()
-          .then(tokenResult => {
-            console.log(tokenResult.claims);
-          });
-        }
-      });
-      
+    created() {  
     }
   }
 

@@ -17,17 +17,7 @@
             v-model="email"
           >
         </div>
-        <div >
-          <label for="name">username</label>
-          <input 
-            type="text" 
-            name="name" 
-            required id="name" 
-            class="form-control" 
-            placeholder="Enter your username"
-            v-model="username"
-          >
-        </div>
+        
         <div >
           <label for="password">Password</label>
           <input 
@@ -41,7 +31,7 @@
         </div>
           
         <md-button  class="md-raised md-primary"  v-if="!loading" @click.prevent="Register">
-          LOGIN
+          Register
         </md-button>
         <md-button  class="md-raised md-primary" disabled v-if="loading">
           <loading-component></loading-component>
@@ -67,7 +57,6 @@
     },
     data(){
       return{
-        username: "",
         password: "",
         email: "",
         loading: false
@@ -81,14 +70,18 @@
         firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
         .then((user) =>{
           this.loading = false
-          alert(`Congrats! You have successfully registered as ${firebase.auth().currentUser.email}`)
+          this.$fire({
+            type: "success",
+            title: "Congrats! You have successfully registered as",
+            text:  `${firebase.auth().currentUser.email}`
+          })
           console.log(user.data)
           this.$router.go({path: this.$router.path})
           
         })
-        .catch((err) => {
+        .catch((error) => {
           this.loading = false
-          alert(err)
+          this.$alert(error.message)
         })
       },
       
@@ -105,8 +98,8 @@
 <style lang='scss' scoped>
 
  .md-content {
-    width: 500px;
-    height: 500px;
+    width: 400px;
+    height: 400px;
     padding: 10px;
     margin: 10px;
   }
@@ -126,7 +119,7 @@
     border-radius: 0.25rem;
     margin-bottom: 30px;
   }
- 
+
   .form-control:focus {
   border-color: #80bdff;
   outline: 0;

@@ -1,39 +1,34 @@
 <template>
   <div >
     <md-tabs class="md-transparent" md-alignment="fixed">
-      <md-tab id="tab-compose" md-label="Compose" to="" >
-        <ComposeMessage />
-      </md-tab>
 
+      <md-tab id="tab-compose" md-label="Compose" :to="{path: '/user/compose'}" >
       
-      <md-tab id="tab-inbox" md-label="Inbox" to="" >
-        <Inbox />
       </md-tab>
       
-
-      <md-tab id="tab-sentmessages" md-label="Sent Messages" to="">
-        <SentMessages />
+      <md-tab id="tab-inbox" md-label="Inbox" :to="{path: '/user/inbox'}">
+        
+      </md-tab>
+    
+      <md-tab id="tab-sentmessages" md-label="Sent Messages" :to="{path: '/user/sentmessages'}">
+        
       </md-tab>
 
-      <md-tab id="tab-favorites" md-label="Favorites" to="">
-
+       <md-tab id="tab-comments" md-label="Read Comments" :to="{path: '/user/comments'}">
+        
       </md-tab>
+
+    
     </md-tabs>
-   
+    
   </div>
 </template>
 
 <script>
-  import ComposeMessage from '@/components/NavigationTabs/ComposeMessage.vue'
-  import Inbox from '@/components/NavigationTabs/Inbox.vue'
-  import SentMessages from '@/components/NavigationTabs/SentMessages.vue'
 
   export default {
     name: 'Navigator',
     components: {
-      ComposeMessage,
-      Inbox,
-      SentMessages
     }
   }
 </script>

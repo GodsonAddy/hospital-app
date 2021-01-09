@@ -1,8 +1,9 @@
 <template>
   <div>
-    <Dashboard />
+    <AdminDashboard />
+    <br />
 
-    <div class="card-expansion">
+     <div class="card-expansion">
       
       <div v-for="item in inbox" v-bind:key="item.key" >
         <md-card>
@@ -10,7 +11,6 @@
             <div class="md-title">
               Title: {{item.title}}
             </div>
-             <div class="md-subhead">From: {{item.author}}  </div>
             <div class="md-subhead">To: {{item.receipient}}  </div>
             <div>Date: {{item.date.toDate() | date}} </div>
           </md-card-header>
@@ -47,16 +47,15 @@
   </div>
 </template>
 
-
 <script>
-  import firebase from 'firebase'
-  import Dashboard from '@/views/Dashboard.vue'
+ import AdminDashboard from '../Admin/AdminDashboard'
+ import firebase from 'firebase'
 
   export default {
-    name: "SentMessages",
-    components: {
-      Dashboard
-    },
+   name: "AdminSentMail",
+   components: {
+    AdminDashboard
+   },
     data(){
       return{
         inbox: [],
@@ -66,18 +65,17 @@
     },
     created() {
       let userId = firebase.auth().currentUser.email
-      firebase.firestore().collection(`users`).doc(userId).collection('post')
+      firebase.firestore().collection(`users/${userId}/comments`)
       .orderBy("date", "desc").get()
       .then( querySnapshot => {
         querySnapshot.forEach(doc => {
           const {seconds, nanoseconds } = doc.data().date;
-          const { title, receipient, content,author} = doc.data()
+          const { title, receipient, content} = doc.data()
           const data = {
             "key": doc.id,
             "title": title,
             "receipient": receipient,
             "content": content,
-            "author": author,
             date: new firebase.firestore.Timestamp(seconds, nanoseconds)
           }
           this.inbox.push(data)
@@ -106,7 +104,7 @@
           }
         })) 
         {
-          firebase.firestore().collection(`users/${userId}/post`)
+          firebase.firestore().collection(`users/${userId}/comments`)
           .doc(id).delete()
           .then(() => {
             console.log("Document deleted!");
@@ -117,11 +115,12 @@
         }
       },     
     }
+
+
   }
 </script>
 
-<style lang="scss" scoped>
-  
+<style lang="scss" scoped >
   .card-expansion {
     height: 480px;
     overflow: auto;
@@ -135,8 +134,6 @@
     max-width: 100%;
     max-height: 100%
   }
-  
-  
-</style>
-
  
+
+</style>
