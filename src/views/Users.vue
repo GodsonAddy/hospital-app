@@ -13,19 +13,21 @@
 
     </md-toolbar>
      
-    <Navigator />
+    <dashboard />
    
   </div>
 </template>
 
 <script>
   import firebase from 'firebase'
-  import Navigator from '@/components/Navigator.vue'
+  import Dashboard from '@/components/Users/Dashboard.vue'
+
 
   export default {
-    name: 'user',
+    name: 'Users',
     components: {
-      Navigator 
+      Dashboard
+      
     },
     data() {
       return {

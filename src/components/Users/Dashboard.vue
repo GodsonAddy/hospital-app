@@ -27,7 +27,7 @@
 <script>
 
   export default {
-    name: 'Navigator',
+    name: 'Dashboard',
     components: {
     }
   }

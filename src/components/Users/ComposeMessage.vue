@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Dashboard />
+    <Users />
       
     <md-content class="md-elevation-2"> 
       <md-field>
@@ -39,13 +39,13 @@
   import LoadingComponent from '@/components/LoadingComponent.vue'
   import firebase from 'firebase'
   import 'firebase/database'
-  import Dashboard from '@/views/Dashboard.vue'
+  import Users from '@/views/Users.vue'
 
   export default {
     name: 'ComposeMessage',
     components: {
       LoadingComponent,
-      Dashboard
+      Users
       
     },
     data() {

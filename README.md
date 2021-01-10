@@ -17,6 +17,7 @@ npm run dev
 Nodejs
 Firebase
 Vue
+Vue Material
 
 ### Register & Login credentials
 
@@ -26,6 +27,8 @@ You can register with any email address to get access to the app
 
 email: admin@admin.com
 password: DR2468
+
+click on the menu button on the left side of the toolbar and begin your job as an admin 
 
 ### Note
 

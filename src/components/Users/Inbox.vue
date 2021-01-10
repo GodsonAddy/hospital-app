@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Dashboard />
+    <Users />
   
   
     <div class="card-expansion">
@@ -11,7 +11,7 @@
             <div class="md-title">
               Title: {{item.title}}
             </div>
-            <div class="md-subhead">From: {{item.author}}  </div>
+            
             <div class="md-subhead">To: {{item.receipient}}  </div>
             <div>Date: {{item.date.toDate() | date}} </div>
           </md-card-header>
@@ -84,13 +84,13 @@
   import firebase from 'firebase'
   import 'firebase/firestore'
   import LoadingComponent from '@/components/LoadingComponent.vue'
-   import Dashboard from '@/views/Dashboard.vue'
+   import Users from '@/views/Users.vue'
 
   export default {
     name: "Inbox",
     components: {
       LoadingComponent, 
-      Dashboard
+      Users
     },
     data(){
       return{

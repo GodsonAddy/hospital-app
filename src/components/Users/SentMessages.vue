@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Dashboard />
+    <Users />
 
     <div class="card-expansion">
       
@@ -10,7 +10,7 @@
             <div class="md-title">
               Title: {{item.title}}
             </div>
-            <div class="md-subhead">From: {{item.author}}  </div>
+             <div class="md-subhead">From: {{item.author}}  </div>
             <div class="md-subhead">To: {{item.receipient}}  </div>
             <div>Date: {{item.date.toDate() | date}} </div>
           </md-card-header>
@@ -50,12 +50,12 @@
 
 <script>
   import firebase from 'firebase'
-  import Dashboard from '@/views/Dashboard.vue'
+  import Users from '@/views/Users.vue'
 
   export default {
-    name: "Comments",
+    name: "SentMessages",
     components: {
-      Dashboard
+      Users
     },
     data(){
       return{
@@ -66,12 +66,12 @@
     },
     created() {
       let userId = firebase.auth().currentUser.email
-      firebase.firestore().collection(`users/${userId}/comments`)
+      firebase.firestore().collection(`users`).doc(userId).collection('post')
       .orderBy("date", "desc").get()
       .then( querySnapshot => {
         querySnapshot.forEach(doc => {
           const {seconds, nanoseconds } = doc.data().date;
-          const { title, receipient, content, author} = doc.data()
+          const { title, receipient, content,author} = doc.data()
           const data = {
             "key": doc.id,
             "title": title,
@@ -95,7 +95,7 @@
           showCancelButton: true,
           confirmButtonColor: '#3085d6',
           cancelButtonColor: '#d33',
-          confirmButtonText: 'Yes, delete it!'
+          confirmButtonText: 'Yes, delete it!',
         }).then((result) => {
           if (result.isConfirmed) {
             this.$fire({
@@ -104,9 +104,16 @@
               text:'Your file has been deleted.'
             })
           }
+          else if(result.isCanceled){
+             this.$fire({
+              type:'info',
+              text:'Your file is safe.'
+            })
+
+          }
         })) 
         {
-          firebase.firestore().collection(`users/${userId}/comments`)
+          firebase.firestore().collection(`users/${userId}/post`)
           .doc(id).delete()
           .then(() => {
             console.log("Document deleted!");
@@ -115,7 +122,7 @@
             console.error(error);
           })
         }
-      },       
+      },     
     }
   }
 </script>
@@ -135,12 +142,7 @@
     max-width: 100%;
     max-height: 100%
   }
-  .md-dialog /deep/.md-dialog-container {
-    width: 500px;
-    height: 400px;
-    padding: 30px 30px 20px 30px;
-    overflow: auto;
-  }
+  
   
 </style>
 

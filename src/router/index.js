@@ -1,14 +1,14 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Dashboard from '../views/Dashboard.vue'
+import Users from '../views/Users.vue'
 import LogIn from '../views/LogIn.vue'
 import Home from '../views/Home.vue'
-import ComposeMessage from '@/components/NavigationTabs/ComposeMessage'
-import Inbox from '@/components/NavigationTabs/Inbox'
-import SentMessages from '@/components/NavigationTabs/SentMessages'
+import ComposeMessage from '@/components/Users/ComposeMessage'
+import Inbox from '@/components/Users/Inbox'
+import SentMessages from '@/components/Users/SentMessages'
 import firebase from 'firebase'
 import Admin from '../views/Admin.vue'
-import Comments from '@/components/NavigationTabs/Comments'
+import Comments from '@/components/Users/Comments'
 import AdminInbox from '@/components/Admin/AdminInbox'
 import AdminSentMail from '@/components/Admin/AdminSentMail'
 import AdminComment from '@/components/Admin/AdminComment'
@@ -42,8 +42,8 @@ const routes = [
   },
   {
     path: '/user',
-    name: 'user',
-    component: Dashboard,
+    name: 'Users',
+    component: Users,
     meta: {
       requiresAuth: true
     }
