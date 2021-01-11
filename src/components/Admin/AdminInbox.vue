@@ -31,8 +31,8 @@
                    </md-field>
 
                    <md-field>
-                    <label>To</label>
-                    <md-input v-model="item.author" disabled></md-input>
+                    <label>To {{item.author}}</label>
+                    <md-input v-model="receipient"></md-input>
                    </md-field>
 
                     <md-field>
@@ -97,7 +97,8 @@
       title: "",
       receipient: "",
       content: "",
-      replies: []
+      replies: [],
+      
     }
   },
   created() {
