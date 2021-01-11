@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Users from '../views/Users.vue'
-import LogIn from '../views/LogIn.vue'
+import Register from '../views/Register.vue'
 import Home from '../views/Home.vue'
 import ComposeMessage from '@/components/Users/ComposeMessage'
 import Inbox from '@/components/Users/Inbox'
@@ -25,9 +25,9 @@ const routes = [
     }
   },
   {
-    path : '/login',
-    name: 'LogIn',
-    component: LogIn,
+    path : '/register',
+    name: 'Register',
+    component: Register,
     meta: {
       requiresGuest: true
     }

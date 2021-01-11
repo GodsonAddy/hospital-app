@@ -39,7 +39,7 @@
           <loading-component></loading-component>
         </md-button>
 
-        <p> Don't have an account? <router-link to='/'> Register here </router-link> </p> 
+        <p> Don't have an account? <router-link to='/register'> Register here </router-link> </p> 
             
       </md-content>
       </form>

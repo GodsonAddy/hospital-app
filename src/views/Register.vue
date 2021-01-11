@@ -37,7 +37,7 @@
           <loading-component></loading-component>
         </md-button>
 
-        <p> Already have an account? <router-link to='/login'> Login here </router-link> </p>
+        <p> Already have an account? <router-link to='/'> Login here </router-link> </p>
             
       </md-content>
       </form>
