@@ -3,7 +3,7 @@ import App from './App.vue'
 import 
   { MdButton, MdApp, MdField, MdElevation, MdIcon, MdContent,
     MdDivider, MdProgress, MdToolbar, MdList, MdTabs, MdCard,
-    MdTooltip, MdDialog,MdDrawer
+    MdTooltip, MdDialog,MdDrawer,MdTable,MdEmptyState, MdCheckbox, MdRipple
   }
  from 
 'vue-material/dist/components'
@@ -34,7 +34,19 @@ Vue.use(MdToolbar)
 Vue.use(MdList)
 Vue.use(MdDialog)
 Vue.use(MdDrawer)
+Vue.use(MdTable)
+Vue.use(MdEmptyState)
+Vue.use(MdCheckbox)
+Vue.use(MdRipple)
+Vue.filter('str_limit', function (value, size) {
+  if (!value) return '';
+  value = value.toString();
 
+  if (value.length <= size) {
+    return value;
+  }
+  return value.substr(0, size) + '...';
+});
 
 
 var firebaseConfig = {

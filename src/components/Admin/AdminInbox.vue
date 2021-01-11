@@ -32,7 +32,7 @@
 
                    <md-field>
                     <label>To</label>
-                    <md-input v-model="receipient"></md-input>
+                    <md-input v-model="item.author" disabled></md-input>
                    </md-field>
 
                     <md-field>
@@ -52,8 +52,9 @@
                   <md-icon class="md-primary" >reply</md-icon>
                   <md-tooltip md-direction="bottom">reply</md-tooltip>
                 </md-button>
+                
               </div>
-
+                   
               <md-card-expand-trigger>
                 <md-button class="md-icon-button">
                   <md-icon>keyboard_arrow_down</md-icon>
@@ -71,7 +72,7 @@
           </md-card-expand>
         </md-card>
 
-        
+       
       </div>
     </div>
   </div>
@@ -95,7 +96,8 @@
       loading: false,
       title: "",
       receipient: "",
-      content: ""
+      content: "",
+      replies: []
     }
   },
   created() {
@@ -121,7 +123,7 @@
     
   },
   methods: {
-    replyMessage(){
+    replyMessage(key){
       this.loading = true
       let userId = firebase.auth().currentUser.email
       firebase.firestore().collection('users').doc(userId).collection('comments')
@@ -130,6 +132,7 @@
         content: this.content,
         date: firebase.firestore.Timestamp.fromDate(new Date()),
         receipient: this.receipient,
+        key,
         userId
       })
       .then(res => {
@@ -151,8 +154,8 @@
       })
       
     },
-    comments(){
-      firebase.firestore().collectionGroup('comments').where("receipient", "==", "admin@admin.com")
+    getPostByKey(key){
+      firebase.firestore().collectionGroup('post').where("key", "==", key)
       .orderBy("date", "desc").get()
       .then( querySnapshot => {
         querySnapshot.docs.forEach(doc => {
@@ -166,11 +169,12 @@
             "author": author,
             date: new firebase.firestore.Timestamp(seconds, nanoseconds)  
           }
-          this.inbox.push(data)
+          this.replies.push(data)
           console.log(`Found document at ${doc.ref.path}`)
+
         })   
       })
-    }
+    },
      
   },
 

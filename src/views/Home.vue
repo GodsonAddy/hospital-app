@@ -3,19 +3,19 @@
     <h1> Welcome to the Hospital app </h1>
     <br />
     
-    <Register />
+    <LogIn />
             
             
   </div>
 </template>
 
 <script>
-import Register from '@/views/Register.vue'
+import LogIn from '@/views/LogIn.vue'
 
 export default {
   name: 'Home',
   components: {
-    Register
+    LogIn
         
   }
 

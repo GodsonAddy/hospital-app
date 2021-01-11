@@ -61,7 +61,9 @@
         </md-list>
 
       </md-drawer>
-      
+      <md-content>
+        <h1>Click on the menu button on the left of the toolbar</h1>
+      </md-content>
     </div>
   </div>
 </template>
